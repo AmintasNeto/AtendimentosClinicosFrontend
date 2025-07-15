@@ -3,5 +3,6 @@ export interface UserSession {
     token: string;
     refreshToken: string; 
     username: string;
+    role: string;
     message: string;
 }
