@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useLoginMutate } from "../hooks/UseLogin";
-import type { LoginFormData } from "../Interface/LoginFormData";
+import { useLoginMutate } from "../../hooks/UseLogin";
+import type { LoginFormData } from "../../Interface/LoginFormData";
 import { ClipLoader } from "react-spinners";
-import { throwInputError } from "../helpers/ToastHelper";
+import { throwInputError } from "../../helpers/ToastHelper";
 import { Button, Form, NavLink } from "react-bootstrap";
 
 function LoginForm() {
@@ -41,7 +41,14 @@ function LoginForm() {
     }
 
     return (
-    <div className="col-xs-12 col-md-6" style={{ backgroundColor: "#f5f5f5", minHeight: "400px", padding: "28px", borderRadius: 8, justifySelf: "center" }}>
+    <div className="col-xs-12 col-md-6" 
+        style={{ backgroundColor: "#f5f5f5", 
+            minHeight: "400px", 
+            padding: "28px", 
+            borderRadius: 8, 
+            position: "relative",
+            transform: "translateY(25%)",
+            justifySelf: "center" }}>
         <Form>
             <h2 className="text-center mb-4">Login</h2>
 
@@ -65,7 +72,7 @@ function LoginForm() {
 
                 <Form.Group className="row g-3 mt-5">
                     <span>Não possui conta? 
-                        <NavLink style={{textDecoration: "underline"}} href="/registrar">Registre-se</NavLink>
+                        <NavLink style={{textDecoration: "underline", fontWeight: "bold"}} href="/registrar">Registre-se</NavLink>
                     </span>
                     <Button type="submit" variant="success" onClick={(e) => submitButtonClicked(e)}>Login</Button>
                 </Form.Group>

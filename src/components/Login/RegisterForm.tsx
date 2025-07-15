@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useRegisterMutate } from "../hooks/UseLogin";
-import type { RegisterFormData } from "../Interface/RegisterFormData";
+import { useRegisterMutate } from "../../hooks/UseLogin";
+import type { RegisterFormData } from "../../Interface/RegisterFormData";
 import { ClipLoader } from "react-spinners";
-import { throwInputError } from "../helpers/ToastHelper";
+import { throwInputError } from "../../helpers/ToastHelper";
 import { Form, Button} from 'react-bootstrap';
 
 function RegisterForm() {
@@ -70,7 +70,14 @@ function RegisterForm() {
     }
 
     return (
-    <div className="col-xs-12 col-md-6" style={{ backgroundColor: "#f5f5f5", minHeight: "400px", padding: "28px", borderRadius: 8, justifySelf: "center" }}>
+    <div className="col-xs-12 col-md-6" 
+    style={{ backgroundColor: "#f5f5f5", 
+        minHeight: "400px", 
+        padding: "28px", 
+        borderRadius: 8,
+        position: "relative",
+        transform: "translateY(10%)", 
+        justifySelf: "center" }}>
         <Form   >
             <h2 className="text-center mb-4">Registrar conta</h2>
 

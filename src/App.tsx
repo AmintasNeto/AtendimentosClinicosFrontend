@@ -1,8 +1,8 @@
 import './App.css'
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
-import HomePage from './components/HomePage';
+import LoginForm from './components/Login/LoginForm'
+import RegisterForm from './components/Login/RegisterForm'
+import HomePage from './components/Home/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './hooks/UseLogin';
 import { ToastContainer } from 'react-toastify';
