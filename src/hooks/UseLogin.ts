@@ -8,9 +8,10 @@ import type { RegisterFormData } from "../Interface/RegisterFormData";
 import { toast } from "react-toastify";
 import type { LoginFormData } from "../Interface/LoginFormData";
 
-type UserAuth = {
+export type UserAuth = {
     user: UserSession | null;
     login: (userData: UserSession) => void;
+    update: (userData: UserSession) => void;
     logout: () => void;
 }
 
@@ -56,11 +57,41 @@ export function useLoginMutate(){
         retry: 2,
         onSuccess: (response) => {
             const data = response.data as UserSession;
-            context?.login(data);
-            navigate("/");
+            
+            if(data.flag) {
+                context!.login(data);
+                localStorage.setItem("userSession", JSON.stringify(data));
+                navigate("/");
+            }
         },
         onError: (e: AxiosError) => {
             toast.error("Ocorreu um erro ao tentar realizar o Login! Código: " + e.response?.status);
+        }
+    })
+
+    return mutate;
+}
+
+const postRefreshToken = async (data: {Token: string}): AxiosPromise<unknown> => {
+    const response = await axios.post(ApiUrlDev + '/api/Authentication' + '/refresh-token', data);
+    return response;
+}
+
+export function useRefreshTokenMutate(){
+    const context = useAuth();
+
+    const mutate = useMutation({
+        mutationFn: postRefreshToken,
+        retry: 2,
+        onSuccess: (response) => {
+            const data = response.data as UserSession;
+            if (data.flag) {
+                context!.update(data);
+                localStorage.setItem("userSession", JSON.stringify(context?.user));
+            }
+        },
+        onError: (e: AxiosError) => {
+            toast.error("Ocorreu um erro ao tentar atualizar o token! Código: " + e.response?.status);
         }
     })
 
