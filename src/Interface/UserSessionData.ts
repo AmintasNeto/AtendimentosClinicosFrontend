@@ -4,5 +4,6 @@ export interface UserSession {
     refreshToken: string; 
     username: string;
     role: string;
+    userId: number;
     message: string;
 }
