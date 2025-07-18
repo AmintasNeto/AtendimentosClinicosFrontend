@@ -6,14 +6,26 @@ import HomePage from './components/Home/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useAuth } from './hooks/UseLogin';
 import { ToastContainer } from 'react-toastify';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { ptBR } from 'date-fns/locale';
+import { useEffect } from 'react';
+import type { UserSession } from './Interface/UserSessionData';
 
 function App() {
   const context = useAuth();
   const session = context?.user;
 
+  useEffect(() => {
+    const storedSession = localStorage.getItem("userSession");
+
+    if(storedSession !== null) context?.login(JSON.parse(localStorage.getItem("userSession") ?? "") as UserSession);
+  },[]);
+
   return (
     <>
     <ToastContainer />
+    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ptBR}>
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginForm />} />
@@ -28,6 +40,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+    </LocalizationProvider>
     </>
   )
 }

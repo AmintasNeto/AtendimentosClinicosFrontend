@@ -7,10 +7,12 @@ type ProtectRouteProps = {
 }
 
 const ProtectedRoute = (props: ProtectRouteProps) => {
-  if (!props.isAuthenticated) {
+  const storedSession = localStorage.getItem("userSession");
+
+  if (!props.isAuthenticated && storedSession === null) {
     return <Navigate to="/login" replace />;
   }
-  return props.children ? props.children : <Outlet />; // Render children or nested routes via Outlet
+  return props.children ? props.children : <Outlet />;
 };
 
 export default ProtectedRoute;
