@@ -57,7 +57,7 @@ function LoginForm() {
                 <Form.Group className="mb-2">
                     <Form.Label>Email</Form.Label>
                     <Form.Control isInvalid={emailError} type="text" value={email} onChange={(e) => {
-                            setEmail(e.target.value);
+                            setEmail(e.target.value.trim());
                             setEmailError(false);
                         }}/>
                 </Form.Group>

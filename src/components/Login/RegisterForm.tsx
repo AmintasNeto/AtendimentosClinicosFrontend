@@ -86,7 +86,7 @@ function RegisterForm() {
                 <Form.Group className="mb-2">
                     <Form.Label>Nome</Form.Label>
                     <Form.Control isInvalid={usernameError} type="text" value={username} onChange={(e) => {
-                            setUsername(e.target.value); 
+                            setUsername(e.target.value.trim()); 
                             setUsernameError(false);
                         }}/>
                 </Form.Group>
@@ -94,7 +94,7 @@ function RegisterForm() {
                 <Form.Group className="mb-2">
                     <Form.Label>Email</Form.Label>
                     <Form.Control isInvalid={emailError} type="text" value={email} onChange={(e) => {
-                            setEmail(e.target.value);
+                            setEmail(e.target.value.trim());
                             setEmailError(false);
                         }}/>
                 </Form.Group>
