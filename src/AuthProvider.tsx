@@ -12,10 +12,31 @@ export const AuthProvider = (props: AuthProps) => {
 
     const login = (userData: UserSession) => setUser(userData);
 
-    const logout = () => setUser(null);
+    const update = (userData: UserSession) => {
+        const token = userData.token !== "" && userData.token !== undefined && userData.token !== null 
+            ? userData.token 
+            : user!.token;
+
+        const refreshToken = userData.refreshToken !== "" && userData.refreshToken !== undefined  && userData.token !== null
+            ? userData.refreshToken 
+            : user!.refreshToken;
+
+        const newUser: UserSession = {
+            ...user!,
+            token,
+            refreshToken
+        };
+
+        setUser(newUser);
+    }
+
+    const logout = () => {
+        setUser(null);
+        localStorage.removeItem("userSession");
+    }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, update }}>
             {props.children}
         </AuthContext.Provider>
     );
