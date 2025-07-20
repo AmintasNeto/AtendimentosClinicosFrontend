@@ -7,7 +7,7 @@ type ProtectRouteProps = {
 }
 
 const ProtectedRoute = (props: ProtectRouteProps) => {
-  const storedSession = localStorage.getItem("userSession");
+  const storedSession = window.sessionStorage.getItem("userSession");
 
   if (!props.isAuthenticated && storedSession === null) {
     return <Navigate to="/login" replace />;

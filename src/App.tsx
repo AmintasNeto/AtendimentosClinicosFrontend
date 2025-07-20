@@ -17,9 +17,9 @@ function App() {
   const session = context?.user;
 
   useEffect(() => {
-    const storedSession = localStorage.getItem("userSession");
+    const storedSession = window.sessionStorage.getItem("userSession");
 
-    if(storedSession !== null) context?.login(JSON.parse(localStorage.getItem("userSession") ?? "") as UserSession);
+    if(storedSession !== null) context?.login(JSON.parse(window.sessionStorage.getItem("userSession") ?? "") as UserSession);
   },[]);
 
   return (

@@ -11,7 +11,7 @@ import { showErrorToast, showSuccessToast } from "../helpers/ToastHelper";
 export type UserAuth = {
     user: UserSession | null;
     login: (userData: UserSession) => void;
-    update: (userData: UserSession) => void;
+    updateToken: (userData: UserSession) => void;
     logout: () => void;
 }
 
@@ -60,7 +60,7 @@ export function useLoginMutate(){
             
             if(data.flag) {
                 context!.login(data);
-                localStorage.setItem("userSession", JSON.stringify(data));
+                window.sessionStorage.setItem("userSession", JSON.stringify(data));
                 navigate("/");
             }
         },
@@ -86,8 +86,7 @@ export function useRefreshTokenMutate(){
         onSuccess: (response) => {
             const data = response.data as UserSession;
             if (data.flag) {
-                context!.update(data);
-                localStorage.setItem("userSession", JSON.stringify(context?.user));
+                context!.updateToken(data);
             }
         },
         onError: (e: AxiosError) => {

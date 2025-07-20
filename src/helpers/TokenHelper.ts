@@ -7,7 +7,7 @@ export function RefreshToken(mutate: UseMutateFunction<AxiosResponse<unknown, un
         Token: string;
     }, unknown>) {
         
-    const session = JSON.parse(localStorage.getItem("userSession") ?? "") as UserSession;
+    const session = JSON.parse(window.sessionStorage.getItem("userSession") ?? "") as UserSession;
     const token = jwtDecode(session.token);
 
     if(token.exp && token.exp * 1000 < new Date().getTime()) {

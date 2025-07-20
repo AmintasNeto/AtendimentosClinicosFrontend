@@ -12,7 +12,7 @@ export const AuthProvider = (props: AuthProps) => {
 
     const login = (userData: UserSession) => setUser(userData);
 
-    const update = (userData: UserSession) => {
+    const updateToken = (userData: UserSession) => {
         const token = userData.token !== "" && userData.token !== undefined && userData.token !== null 
             ? userData.token 
             : user!.token;
@@ -28,15 +28,16 @@ export const AuthProvider = (props: AuthProps) => {
         };
 
         setUser(newUser);
+        window.sessionStorage.setItem("userSession", JSON.stringify(newUser));
     }
 
     const logout = () => {
         setUser(null);
-        localStorage.removeItem("userSession");
+        window.sessionStorage.removeItem("userSession");
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, update }}>
+        <AuthContext.Provider value={{ user, login, logout, updateToken: updateToken }}>
             {props.children}
         </AuthContext.Provider>
     );
