@@ -37,7 +37,9 @@ function AppointmentsList(props: AppointmentsListProps) {
     const { data, isPending } = useAppointmentData(context?.user?.refreshToken ?? "");
 
     return (
-        <div style={{marginTop: 25}}>
+        <div style={{
+                marginTop: props.windowWidth >= 768 ? 25 : 5
+            }}>
             {isPending ? <ClipLoader />
                 : data?.length === 0 
                     ? <span style={{fontSize: props.windowWidth >= 768 ? 20 : 14}}>Você não tem nenhuma consulta agendada.</span>

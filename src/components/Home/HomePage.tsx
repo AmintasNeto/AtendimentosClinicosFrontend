@@ -41,23 +41,32 @@ function HomePage() {
     return (
     <>
         <Navbar width={windowWidth} />
-        <div style={{display: "flex", justifyContent: "space-between", marginRight: 10, marginTop: 30}}>
+        <div style={{
+                display: "flex", 
+                justifyContent: "space-between", 
+                marginRight: 10, 
+                marginTop: 30
+            }}>
             <Select
                 value={filterSelected}
                 onChange={(e) => setFilterSelected(e.target.value)}
                 style={{
-                    marginLeft: 15
+                    marginLeft: 15,
+                    maxHeight: 42
                 }}
             >
                 <MenuItem key={1} value={"Todos"}>Todos</MenuItem>
-                <MenuItem key={2} value={"Em Aberto"}>Em Aberto</MenuItem>
+                <MenuItem key={2} value={"Em Aberto"} hidden={context?.user?.role === "Patient"}>Em Aberto</MenuItem>
                 <MenuItem key={3} value={"Agendada"}>Agendada</MenuItem>
                 <MenuItem key={4} value={"Finalizada"}>Finalizada</MenuItem>
-                <MenuItem key={5} value={"Expirada"}>Expirada</MenuItem>
+                <MenuItem key={5} value={"Expirada"} hidden={context?.user?.role === "Patient"}>Expirada</MenuItem>
                 <MenuItem key={6} value={"Cancelada"}>Cancelada</MenuItem>
             </Select>
             <Button variant="primary" onClick={() => handleShowModal()} className="button-shadow"
-                title={`${context?.user?.role === "Patient" ? "Agendar" : "Cadastrar"} Atendimento`}>
+                title={`${context?.user?.role === "Patient" ? "Agendar" : "Cadastrar"} Atendimento`}
+                style={{
+                    maxHeight: windowWidth >= 768 ? 42 : 38
+                }}>
                 {windowWidth >= 768 
                     ? <span style={{marginRight: 5}}>{context?.user?.role === "Patient" ? "Agendar" : "Cadastrar"} Atendimento</span>
                     : <></>}
