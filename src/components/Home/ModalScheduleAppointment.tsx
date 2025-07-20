@@ -22,7 +22,7 @@ function ModalScheduleAppointment(props: ModalProps) {
     const context = useAuth();
 
     useEffect(() => {
-        if(!opennedAppointments.isPending){
+        if(opennedAppointments.isSuccess){
             const doctorsName: string[] = doctorsNameList;
             const doctors: Map<string, number> = doctorsMap;
             const appointmentsMapTemp: Map<number, Appointment> = new Map();
@@ -31,7 +31,7 @@ function ModalScheduleAppointment(props: ModalProps) {
                 appointmentsMapTemp.set(appointment.id, appointment);
                 const doctor = {id: appointment.doctorId, name: appointment.doctor.fullname};
 
-                if(!doctorsNameList.some(d => d === doctor.name)) {
+                if(!doctorsName.some(d => d === doctor.name)) {
                     doctorsName.push(doctor.name);
                     doctors.set(doctor.name, doctor.id);
                 }
@@ -41,7 +41,7 @@ function ModalScheduleAppointment(props: ModalProps) {
             setDoctorsNameList(doctorsName);
             setDoctorsMap(doctors);
         }
-    }, [opennedAppointments.isPending]);
+    }, [doctorsMap, doctorsNameList, opennedAppointments.data, opennedAppointments.isSuccess]);
 
     function resetValues() {
         setSelectedDoctor(null);
@@ -76,7 +76,7 @@ function ModalScheduleAppointment(props: ModalProps) {
 
     return (
     <>
-        <Modal show={props.isVisible} onHide={props.handleCloseModal} onExit={resetValues} onEnter={() => opennedAppointments.refetch()}>
+        <Modal show={props.isVisible} onHide={props.handleCloseModal} onExit={resetValues}>
             <Modal.Header closeButton>
             <Modal.Title>Agendar Consulta</Modal.Title>
             </Modal.Header>
@@ -86,7 +86,7 @@ function ModalScheduleAppointment(props: ModalProps) {
                     value={selectedDoctor}
                     options={doctorsNameList}
                     disabled={scheduleAppointment.isPending}
-                    onChange={(e, newValue) => setSelectedDoctor(newValue)}
+                    onChange={(_, newValue) => setSelectedDoctor(newValue)}
                     style={{
                         marginBottom: 25
                     }}
