@@ -43,7 +43,7 @@ function LoginForm() {
     return (
     <div className="col-xs-12 col-md-6" 
         style={{ backgroundColor: "#f5f5f5", 
-            minHeight: "400px", 
+            minWidth: "350px", 
             padding: "28px", 
             borderRadius: 8, 
             position: "relative",
@@ -53,31 +53,31 @@ function LoginForm() {
         <Form>
             <h2 className="text-center mb-4">Login</h2>
 
-            {isPending ? <ClipLoader />
-            : <>
-                <Form.Group className="mb-2">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control isInvalid={emailError} type="text" value={email} onChange={(e) => {
-                            setEmail(e.target.value.trim());
-                            setEmailError(false);
-                        }}/>
-                </Form.Group>
+            <Form.Group className="mb-2">
+                <Form.Label>Email</Form.Label>
+                <Form.Control disabled={isPending} isInvalid={emailError} type="text" value={email} onChange={(e) => {
+                        setEmail(e.target.value.trim());
+                        setEmailError(false);
+                    }}/>
+            </Form.Group>
 
-                <Form.Group className="mb-2">
-                    <Form.Label>Senha</Form.Label>
-                    <Form.Control isInvalid={passwordError} type="password" value={password} onChange={(e) => {
-                            setPassword(e.target.value);
-                            setPasswordError(false);
-                        }}/>
-                </Form.Group>
+            <Form.Group className="mb-2">
+                <Form.Label>Senha</Form.Label>
+                <Form.Control disabled={isPending} isInvalid={passwordError} type="password" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                        setPasswordError(false);
+                    }}/>
+            </Form.Group>
 
-                <Form.Group className="row g-3 mt-5">
-                    <span>Não possui conta? 
-                        <NavLink style={{textDecoration: "underline", fontWeight: "bold"}} href="/registrar">Registre-se</NavLink>
-                    </span>
-                    <Button type="submit" variant="success" onClick={(e) => submitButtonClicked(e)}>Login</Button>
-                </Form.Group>
-            </>}
+            <Form.Group className="row g-3 mt-5" style={{justifyContent: "center"}}>
+                <span>Não possui conta? 
+                    <NavLink style={{textDecoration: "underline", fontWeight: "bold"}} href="/registrar">Registre-se</NavLink>
+                </span>
+                {isPending
+                    ? <ClipLoader />
+                    : <Button type="submit" variant="success" onClick={(e) => submitButtonClicked(e)}>Login</Button>
+                }
+            </Form.Group>
         </Form>
     </ div>
     );

@@ -72,7 +72,7 @@ function RegisterForm() {
     return (
     <div className="col-xs-12 col-md-6" 
     style={{ backgroundColor: "#f5f5f5", 
-        minHeight: "400px", 
+        minWidth: "350px", 
         padding: "28px", 
         borderRadius: 8,
         position: "relative",
@@ -81,53 +81,53 @@ function RegisterForm() {
         <Form   >
             <h2 className="text-center mb-4">Registrar conta</h2>
 
-            {isPending ? <ClipLoader /> 
-            : <>
-                <Form.Group className="mb-2">
-                    <Form.Label>Nome</Form.Label>
-                    <Form.Control isInvalid={usernameError} type="text" value={username} onChange={(e) => {
-                            setUsername(e.target.value.trim()); 
-                            setUsernameError(false);
-                        }}/>
-                </Form.Group>
-                
-                <Form.Group className="mb-2">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control isInvalid={emailError} type="text" value={email} onChange={(e) => {
-                            setEmail(e.target.value.trim());
-                            setEmailError(false);
-                        }}/>
-                </Form.Group>
-                
-                <Form.Group className="mb-2">
-                    <Form.Label>Senha</Form.Label>
-                    <Form.Control isInvalid={passwordError} type="password" value={password} onChange={(e) => {
-                            setPassword(e.target.value);
-                            setPasswordError(false);
-                        }}/>
-                </Form.Group>
-                
-                <Form.Group className="mb-2">
-                    <Form.Label>Confirme a senha</Form.Label>
-                    <Form.Control isInvalid={confirmPasswordError} type="password" value={confirmPassword} onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-                            setConfirmPasswordError(false);
-                        }}/>
-                </Form.Group>
-                
-                <Form.Group className="mb-4">
-                    <Form.Label>Tipo de Usuário</Form.Label>
-                    <Form.Select value={role} onChange={(e) => setRole(e.target.value)}>
-                        <option value="Patient">Paciente</option>
-                        <option value="Doctor">Médico</option>
-                    </Form.Select>
-                </Form.Group>
+            <Form.Group className="mb-2">
+                <Form.Label>Nome</Form.Label>
+                <Form.Control disabled={isPending} isInvalid={usernameError} type="text" value={username} onChange={(e) => {
+                        setUsername(e.target.value.trim()); 
+                        setUsernameError(false);
+                    }}/>
+            </Form.Group>
+            
+            <Form.Group className="mb-2">
+                <Form.Label>Email</Form.Label>
+                <Form.Control disabled={isPending} isInvalid={emailError} type="text" value={email} onChange={(e) => {
+                        setEmail(e.target.value.trim());
+                        setEmailError(false);
+                    }}/>
+            </Form.Group>
+            
+            <Form.Group className="mb-2">
+                <Form.Label>Senha</Form.Label>
+                <Form.Control disabled={isPending} isInvalid={passwordError} type="password" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                        setPasswordError(false);
+                    }}/>
+            </Form.Group>
+            
+            <Form.Group className="mb-2">
+                <Form.Label>Confirme a senha</Form.Label>
+                <Form.Control disabled={isPending} isInvalid={confirmPasswordError} type="password" value={confirmPassword} onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        setConfirmPasswordError(false);
+                    }}/>
+            </Form.Group>
+            
+            <Form.Group className="mb-4">
+                <Form.Label>Tipo de Usuário</Form.Label>
+                <Form.Select disabled={isPending} value={role} onChange={(e) => setRole(e.target.value)}>
+                    <option value="Patient">Paciente</option>
+                    <option value="Doctor">Médico</option>
+                </Form.Select>
+            </Form.Group>
 
-                <Form.Group className="d-flex justify-content-between">
-                    <Button variant="secondary" style={{marginRight: 15}} onClick={voltarButtonClicked}>Voltar</Button>
-                    <Button type="submit" variant="success" onClick={(e) => submitButtonClicked(e)}>Registrar</Button>
-                </Form.Group>
-            </>}
+            <Form.Group className="d-flex justify-content-between">
+                <Button variant="secondary" style={{marginRight: 15}} onClick={voltarButtonClicked}>Voltar</Button>
+                {isPending 
+                    ? <ClipLoader /> 
+                    : <Button type="submit" variant="success" onClick={(e) => submitButtonClicked(e)}>Registrar</Button>
+                }
+            </Form.Group>
         </Form>
     </ div>
     );
