@@ -5,6 +5,7 @@ import { Autocomplete, InputLabel, MenuItem, Select, TextField } from "@mui/mate
 import type { RegisterAppointmentData } from "../../Interface/RegisterAppointmentData";
 import { useAuth } from "../../hooks/UseLogin";
 import { ClipLoader } from "react-spinners";
+import { throwInputError } from "../../helpers/ToastHelper";
 
 type ModalProps = {
     isVisible: boolean; 
@@ -54,24 +55,28 @@ function ModalScheduleAppointment(props: ModalProps) {
     function handleSubmit(e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) {
         e.preventDefault();
 
-        const appointmentForm = appointmentsMap?.get(selectedAppointment);
-        const appointmentToSchedule: RegisterAppointmentData = {
-            Id: appointmentForm!.id,
-            AppointmentDate: appointmentForm!.appointmentDate,
-            AppointmentStartTime: appointmentForm!.appointmentStartTime,
-            AppointmentEndTime: appointmentForm!.appointmentEndTime,
-            DoctorId: appointmentForm!.doctorId,
-            PatientId: context?.user?.userId
-        };
+        if(selectedDoctor !== null && selectedAppointment !== 0) {
+            const appointmentForm = appointmentsMap?.get(selectedAppointment);
+            const appointmentToSchedule: RegisterAppointmentData = {
+                Id: appointmentForm!.id,
+                AppointmentDate: appointmentForm!.appointmentDate,
+                AppointmentStartTime: appointmentForm!.appointmentStartTime,
+                AppointmentEndTime: appointmentForm!.appointmentEndTime,
+                DoctorId: appointmentForm!.doctorId,
+                PatientId: context?.user?.userId
+            };
 
-        scheduleAppointment.mutate(appointmentToSchedule, {onSuccess(response) {
-                const data = response.data as {flag: boolean, message: string};
-                if (data.flag) {
-                    resetValues();
+            scheduleAppointment.mutate(appointmentToSchedule, {onSuccess(response) {
+                    const data = response.data as {flag: boolean, message: string};
+                    if (data.flag) {
+                        resetValues();
 
-                    props.handleCloseModal();
-                }
-            }});
+                        props.handleCloseModal();
+                    }
+                }});
+        } else {
+            throwInputError("Um médico e uma consulta devem ser selecionados para poder agendar uma consultas!")
+        }
     }
 
     return (
@@ -82,30 +87,42 @@ function ModalScheduleAppointment(props: ModalProps) {
             </Modal.Header>
 
             <Modal.Body aria-hidden={false}>
+                <InputLabel id="appointment-autocomplet-label">Médico</InputLabel>
                 <Autocomplete
                     value={selectedDoctor}
                     options={doctorsNameList}
                     disabled={scheduleAppointment.isPending}
                     onChange={(_, newValue) => setSelectedDoctor(newValue)}
                     style={{
+                        marginTop: 5,
                         marginBottom: 25
                     }}
                     renderInput={(params) => <TextField {...params} label="Selecione um médico..." />}
                 />
-                <InputLabel id="appointment-select-label">Consulta</InputLabel>
+                <InputLabel hidden={selectedDoctor === null} id="appointment-select-label">Consulta</InputLabel>
                 <Select
                     labelId="appointment-select-label"
                     value={selectedAppointment}
                     onChange={(e) => setSelectedAppointment(e.target.value)}
                     label="Consulta"
                     disabled={scheduleAppointment.isPending}
+                    hidden={selectedDoctor === null}
                 >
                     <MenuItem key={0} value={0} disabled={true}>Selecione uma consulta...</MenuItem>
                     {Array.from(appointmentsMap.values()).map((appointment, index) => 
                         {
                             if(selectedDoctor !== null && appointment.doctor.fullname === selectedDoctor) {
-                                return <MenuItem key={index + 1} value={appointment.id}>
-                                            {appointment.appointmentDate} {appointment.appointmentStartTime} - {appointment.appointmentEndTime}
+                                return <MenuItem key={index + 1} value={appointment.id} style={{
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "start"
+                                }}>
+                                            <div>
+                                                <span style={{fontWeight: "bold"}}>Dia: </span>{appointment.appointmentDate}    
+                                            </div>
+                                            <div>
+                                                <span style={{fontWeight: "bold"}}>Horário: </span>{appointment.appointmentStartTime} - {appointment.appointmentEndTime}    
+                                            </div> 
                                         </MenuItem>;
                             }
                         }
