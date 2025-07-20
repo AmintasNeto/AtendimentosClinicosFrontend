@@ -12,3 +12,13 @@
 
 ## Observação:
 O backend do projeto (https://github.com/AmintasNeto/AtendimentosClinicosBackend) deve estar sendo executado na porta 5013.
+
+## Informações sobre os Status das consultas
+As consultas apresentarão um dos 5 status a seguir:
+* Cancelada: A consulta foi cancelada pelo médico.
+* Em aberto: A consulta tem data e hora posterior a data e hora atual, ela não foi cancelada e não tem nenhum paciente associado a consulta.
+* Agendada: A consulta tem data e hora posterior a data e hora atual, ela não foi cancelada e tem um paciente associado a consulta.
+* Expirada: A data e hora da consulta já passou, ela não foi cancelada e não tem nenhum paciente associado a consulta.
+* Finalizada: A data e hora da consulta já passou, ela não foi cancelada e tem um paciente associado a consulta.
+
+Apenas as consultas com status Em Aberto ou Agendada podem ser modificadas ou canceladas, as demais apenas podem ser visualizadas.
