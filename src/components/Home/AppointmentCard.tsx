@@ -6,6 +6,7 @@ import { ClipLoader } from "react-spinners";
 
 type AppointmentCardProps = {
     appointment: Appointment;
+    appointmentStatus: string;
     windowWidth: number;
     handleShowModal: (appointment?: Appointment) => void;
 }
@@ -67,9 +68,11 @@ function AppointmentsCard(props: AppointmentCardProps) {
             margin: 15, 
             padding: 10, 
             fontSize: props.windowWidth >= 768 ? 16 : 14,
+            minHeight: props.windowWidth >= 768 ? 100 : 88,
             borderRadius: 8,
             display: "flex",
-            justifyContent: deleteAppointment.isPending ? "center" : "space-between"
+            justifyContent: deleteAppointment.isPending || cancelAppointmentSchedule.isPending ? "center" : "space-between",
+            alignItems: "center"
         }}>
         {deleteAppointment.isPending || cancelAppointmentSchedule.isPending
             ? <ClipLoader />
@@ -125,6 +128,7 @@ function AppointmentsCard(props: AppointmentCardProps) {
                             </Button>
                         </div>
                     : <Button 
+                        hidden={props.appointmentStatus !== "Agendada"}
                         variant="danger" 
                         size={props.windowWidth >= 768 ? "lg" : "sm"} 
                         title="Cancelar Agendamento" 

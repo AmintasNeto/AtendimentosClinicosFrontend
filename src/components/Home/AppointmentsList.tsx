@@ -50,6 +50,7 @@ function AppointmentsList(props: AppointmentsListProps) {
                             ){
                                     return <AppointmentsCard key={index} 
                                         appointment={appointmentData} 
+                                        appointmentStatus={appointmentStatus}
                                         windowWidth={props.windowWidth} 
                                         handleShowModal={props.handleShowModal}
                                     />
