@@ -43,7 +43,7 @@ function AppointmentsList(props: AppointmentsListProps) {
             {isPending ? <ClipLoader />
                 : data?.length === 0 
                     ? <span style={{fontSize: props.windowWidth >= 768 ? 20 : 14}}>Você não tem nenhuma consulta agendada.</span>
-                    : <List style={{overflow: "auto", maxHeight: props.windowWidth >= 768 ? 490 : 430}}>
+                    : <List style={{overflow: "auto", maxHeight: props.windowWidth >= 768 ? 530 : 470}}>
                         {
                             data?.map((appointmentData, index) => {
                                 const appointmentStatus = checkAppointmentStatus(appointmentData);

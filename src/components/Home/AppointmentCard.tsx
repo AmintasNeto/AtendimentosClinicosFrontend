@@ -110,6 +110,10 @@ function AppointmentsCard(props: AppointmentCardProps) {
                     {context?.user?.role !== "Patient" 
                     ?   <div style={{display: "flex", justifyContent: "start", gap: 10}}>
                             <Button variant="warning" 
+                                hidden={props.appointmentStatus === "Cancelada" 
+                                    || props.appointmentStatus === "Expirada"
+                                    || props.appointmentStatus === "Finalizada"
+                                }
                                 size={props.windowWidth >= 768 ? "lg" : "sm"} 
                                 title="Editar Consulta" 
                                 className="button-shadow"
@@ -119,6 +123,10 @@ function AppointmentsCard(props: AppointmentCardProps) {
                             </Button>
                             <Button 
                                 variant="danger" 
+                                hidden={props.appointmentStatus === "Cancelada" 
+                                    || props.appointmentStatus === "Expirada"
+                                    || props.appointmentStatus === "Finalizada"
+                                }
                                 size={props.windowWidth >= 768 ? "lg" : "sm"} 
                                 title="Cancelar Consulta" 
                                 className="button-shadow"
