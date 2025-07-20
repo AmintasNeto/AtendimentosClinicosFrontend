@@ -5,7 +5,7 @@ import { Autocomplete, InputLabel, MenuItem, Select, TextField } from "@mui/mate
 import type { RegisterAppointmentData } from "../../Interface/RegisterAppointmentData";
 import { useAuth } from "../../hooks/UseLogin";
 import { ClipLoader } from "react-spinners";
-import { throwInputError } from "../../helpers/ToastHelper";
+import { showErrorToast } from "../../helpers/ToastHelper";
 
 type ModalProps = {
     isVisible: boolean; 
@@ -75,7 +75,7 @@ function ModalScheduleAppointment(props: ModalProps) {
                     }
                 }});
         } else {
-            throwInputError("Um médico e uma consulta devem ser selecionados para poder agendar uma consultas!")
+            showErrorToast("Um médico e uma consulta devem ser selecionados para poder agendar uma consultas!")
         }
     }
 

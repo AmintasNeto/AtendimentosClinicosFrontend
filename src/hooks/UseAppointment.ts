@@ -1,9 +1,8 @@
 import { useMutation, useQuery, useQueryClient, type QueryFunctionContext } from "@tanstack/react-query";
 import axios, { AxiosError, type AxiosPromise } from "axios";
-import { toast } from "react-toastify";
 import { ApiUrlDev } from "../helpers/Constants";
 import type { RegisterAppointmentData } from "../Interface/RegisterAppointmentData";
-import { throwInputError } from "../helpers/ToastHelper";
+import { showErrorToast, showSuccessToast } from "../helpers/ToastHelper";
 
 export interface Appointment {
     id: number;
@@ -32,12 +31,12 @@ export function useAppointmentRegisterMutate(){
             const data = response.data as {flag: boolean, message: string};
             if (data.flag) {
                 queryClient.invalidateQueries({queryKey: ['appointment-data']});
-                toast.success("Consulta criada com sucesso!");
+                showSuccessToast("Consulta criada com sucesso!");
             }
-            else throwInputError(data.message);
+            else showErrorToast(data.message);
         },
         onError: (e: AxiosError) => {
-            throwInputError("Ocorreu um erro ao tentar realizar o cadastro da consulta! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar realizar o cadastro da consulta! Código: " + e.response?.status);
         }
     })
 
@@ -59,12 +58,12 @@ export function useAppointmentUpdateMutate(){
             const data = response.data as {flag: boolean, message: string};
             if (data.flag) {
                 queryClient.invalidateQueries({queryKey: ['appointment-data']});
-                toast.success("Consulta atualizada com sucesso!");
+                showSuccessToast("Consulta atualizada com sucesso!");
             }
-            else throwInputError(data.message);
+            else showErrorToast(data.message);
         },
         onError: (e: AxiosError) => {
-            throwInputError("Ocorreu um erro ao tentar realizar o cadastro da consulta! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar realizar o cadastro da consulta! Código: " + e.response?.status);
         }
     })
 
@@ -123,12 +122,12 @@ export function useAppointmentDeleteMutate(){
             const data = response.data as {flag: boolean, message: string};
             if (data.flag) {
                 queryClient.invalidateQueries({queryKey: ['appointment-data']});
-                toast.success("Consulta cancelada com sucesso!");
+                showSuccessToast("Consulta cancelada com sucesso!");
             }
-            else throwInputError(data.message);
+            else showErrorToast(data.message);
         },
         onError: (e: AxiosError) => {
-            throwInputError("Ocorreu um erro ao tentar realizar o cancelamento da consulta! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar realizar o cancelamento da consulta! Código: " + e.response?.status);
         }
     })
 
@@ -150,12 +149,12 @@ export function useAppointmentScheduleMutate(){
             const data = response.data as {flag: boolean, message: string};
             if (data.flag) {
                 queryClient.invalidateQueries({queryKey: ['appointment-data']});
-                toast.success("Consulta agendada com sucesso!");
+                showSuccessToast("Consulta agendada com sucesso!");
             }
-            else throwInputError(data.message);
+            else showErrorToast(data.message);
         },
         onError: (e: AxiosError) => {
-            throwInputError("Ocorreu um erro ao tentar realizar o agendamento da consulta! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar realizar o agendamento da consulta! Código: " + e.response?.status);
         }
     })
 
@@ -177,12 +176,12 @@ export function useAppointmentCancelScheduleMutate(){
             const data = response.data as {flag: boolean, message: string};
             if (data.flag) {
                 queryClient.invalidateQueries({queryKey: ['appointment-data']});
-                toast.success("Consulta cancelada com sucesso!");
+                showSuccessToast("Consulta cancelada com sucesso!");
             }
-            else throwInputError(data.message);
+            else showErrorToast(data.message);
         },
         onError: (e: AxiosError) => {
-            throwInputError("Ocorreu um erro ao tentar realizar o cancelamento da consulta! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar realizar o cancelamento da consulta! Código: " + e.response?.status);
         }
     })
 

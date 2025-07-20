@@ -5,8 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError, type AxiosPromise } from "axios"
 import { useNavigate } from "react-router";
 import type { RegisterFormData } from "../Interface/RegisterFormData";
-import { toast } from "react-toastify";
 import type { LoginFormData } from "../Interface/LoginFormData";
+import { showErrorToast, showSuccessToast } from "../helpers/ToastHelper";
 
 export type UserAuth = {
     user: UserSession | null;
@@ -32,11 +32,11 @@ export function useRegisterMutate(){
         mutationFn: postRegister,
         retry: 2,
         onSuccess: () => {
-            toast.success("Conta criada com sucesso!");
+            showSuccessToast("Conta criada com sucesso!");
             navigate("/login");
         },
         onError: (e: AxiosError) => {
-            toast.error("Ocorreu um erro ao tentar realizar o cadastro! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar realizar o cadastro! Código: " + e.response?.status);
         }
     })
 
@@ -65,7 +65,7 @@ export function useLoginMutate(){
             }
         },
         onError: (e: AxiosError) => {
-            toast.error("Ocorreu um erro ao tentar realizar o Login! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar realizar o Login! Código: " + e.response?.status);
         }
     })
 
@@ -91,7 +91,7 @@ export function useRefreshTokenMutate(){
             }
         },
         onError: (e: AxiosError) => {
-            toast.error("Ocorreu um erro ao tentar atualizar o token! Código: " + e.response?.status);
+            showErrorToast("Ocorreu um erro ao tentar atualizar o token! Código: " + e.response?.status);
         }
     })
 

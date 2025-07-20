@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLoginMutate } from "../../hooks/UseLogin";
 import type { LoginFormData } from "../../Interface/LoginFormData";
 import { ClipLoader } from "react-spinners";
-import { throwInputError } from "../../helpers/ToastHelper";
+import { showErrorToast } from "../../helpers/ToastHelper";
 import { Button, Form, NavLink } from "react-bootstrap";
 
 function LoginForm() {
@@ -24,13 +24,13 @@ function LoginForm() {
             )) {
             setEmailError(true);
             
-            return throwInputError("Email ou senha inválido.");
+            return showErrorToast("Email ou senha inválido.");
         }
 
         if (password === '' || password.length < 6) {
             setPasswordError(true);
 
-            return throwInputError("Email ou senha inválido.");
+            return showErrorToast("Email ou senha inválido.");
         }
 
         const registerForm: LoginFormData = {
@@ -48,7 +48,8 @@ function LoginForm() {
             borderRadius: 8, 
             position: "relative",
             transform: "translateY(25%)",
-            justifySelf: "center" }}>
+            justifySelf: "center" 
+        }}>
         <Form>
             <h2 className="text-center mb-4">Login</h2>
 

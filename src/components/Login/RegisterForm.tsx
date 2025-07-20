@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useRegisterMutate } from "../../hooks/UseLogin";
 import type { RegisterFormData } from "../../Interface/RegisterFormData";
 import { ClipLoader } from "react-spinners";
-import { throwInputError } from "../../helpers/ToastHelper";
+import { showErrorToast } from "../../helpers/ToastHelper";
 import { Form, Button} from 'react-bootstrap';
 
 function RegisterForm() {
@@ -34,7 +34,7 @@ function RegisterForm() {
         if (username === '' || username.length < 5) {
             setUsernameError(true);
             
-            return throwInputError("O campo de nome deve ser preenchido com pelo menos 1 nome.");
+            return showErrorToast("O campo de nome deve ser preenchido com pelo menos 1 nome.");
         }
 
         if (email === '' 
@@ -44,19 +44,19 @@ function RegisterForm() {
             )) {
             setEmailError(true);
             
-            return throwInputError("Email inválido.");
+            return showErrorToast("Email inválido.");
         }
 
         if (password === '' || password.length < 6) {
             setPasswordError(true);
 
-            return throwInputError("A senha deve conter mais de 5 caracteres.");
+            return showErrorToast("A senha deve conter mais de 5 caracteres.");
         }
 
         if (confirmPassword !== password) {
             setConfirmPasswordError(true);
 
-            return throwInputError("A senha não coincide com a senha confirmação.");
+            return showErrorToast("A senha não coincide com a senha confirmação.");
         }
 
         const registerForm: RegisterFormData = {
